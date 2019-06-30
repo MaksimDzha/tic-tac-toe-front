@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Game from './Game';
 
 // import './style.css'
 
@@ -18,7 +19,7 @@ const style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'LightGoldenrodYellow',
+    backgroundColor: '#ffcc00',
     borderRadius: 10
   },
   column: {
@@ -42,11 +43,23 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        isGameRun: false,
         users: null
         };
+        this.playTheGame = this.playTheGame.bind(this)
+    }
+
+    playTheGame(isGameRun){
+        this.setState({isGameRun});
     }
 
   render() {
+      if (this.state.isGameRun) {
+        return (
+          <Game users={this.users} playTheGame={this.playTheGame} />
+        )
+      }
+
       return (
       <div style={style.start}>
           <div style={style.gameName}>Добро пожаловать в игру крестики-нолики</div>
@@ -59,7 +72,7 @@ class App extends Component {
               <input />
           </div>
           <div style={style.buttons}>
-              <button onClick={() => startGame()}>Начать игру</button>
+              <button onClick={() => this.setState({isGameRun: true})}>Начать игру</button>
           </div>
       </div>
       )
