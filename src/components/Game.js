@@ -11,7 +11,7 @@ const style = {
   gameName: {
     margin: 10,
     height: 60,
-    width: 600,
+    width: 300,
     fontSize: 22,
     display: 'flex',
     alignItems: 'center',
@@ -19,16 +19,64 @@ const style = {
     backgroundColor: '#ffcc00',
     borderRadius: 10
   },
+    icon: {
+      marginRight: 10,
+      height: 80,
+      width: 80,
+      fontSize: 40,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'Gold',
+      borderRadius: 20
+    },
+    column: {
+      margin: 10,
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'column'
+    },
+    row: {
+      margin: 10,
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'row'
+    },
    buttons:{
-     margin: 5,
+     margin: 10,
      display: 'flex',
      justifyContent: 'center',
    }
 };
 
-const Game = ({users, playTheGame}) => (
+const nextStep = () => (
+    console.log("Ход!")
+)
+
+const BattleTable = (size) => (
+  <div style={style.column}>
+    <div style={style.row}>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+    </div>
+    <div style={style.row}>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+    </div>
+    <div style={style.row}>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+        <div style={style.icon} onClick={() => nextStep()}></div>
+    </div>
+  </div>
+)
+
+const Game = ({users, playTheGame, size}) => (
     <div style={style.game}>
         <div style={style.gameName}>Игра началась</div>
+        <div><BattleTable size={size} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>

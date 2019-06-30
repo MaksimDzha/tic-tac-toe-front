@@ -43,6 +43,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        size: 3,
         isGameRun: false,
         users: null
         };
@@ -56,7 +57,7 @@ class App extends Component {
   render() {
       if (this.state.isGameRun) {
         return (
-          <Game users={this.users} playTheGame={this.playTheGame} />
+          <Game users={this.users} playTheGame={this.playTheGame} size={this.size} />
         )
       }
 
