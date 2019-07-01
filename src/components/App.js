@@ -79,7 +79,7 @@ class App extends Component {
               <input onChange={(e) => this.changeName(1, e.target.value)} />
           </div>
           <div style={style.buttons}>
-              <button onClick={() => this.setState({isGameRun: true})}>Начать игру</button>
+              <button onClick={() => this.playTheGame(true)}>Начать игру</button>
           </div>
       </div>
       )

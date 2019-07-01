@@ -63,40 +63,67 @@ const nextStep = () => (
 )
 
 class Cell extends React.Component {
-  state = {
-    value: "",
-  };
-
   render() {
     return (
-      <div style={style.icon} onClick={() => this.setState({value: "X"})}>{this.state.value}</div>
+      <div style={style.icon} onClick = {this.props.onChange}>{this.props.value}</div>
     );
   }
 }
 
-const BattleTable = (size, users) => (
-    <div style={style.row}>
-    {console.log(users[1])}
-        <div style={style.playerName}>Player 1<br />играет за "X"</div>
-        <div style={style.column}>
-          <div style={style.row}>
-              <Cell /><Cell /><Cell />
-          </div>
-          <div style={style.row}>
-              <Cell /><Cell /><Cell />
-          </div>
-          <div style={style.row}>
-              <Cell /><Cell /><Cell />
-          </div>
-        </div>
-        <div style={style.playerName}>Player 2<br />играет за "O"</div>
-    </div>
-)
+class BattleTable extends React.Component{
 
-const Game = ({playTheGame}, size, users) => (
+  state = {
+    table: [
+        ["1","2","3"],
+        ["4","",""],
+        ["","8","9"]
+    ],
+
+  };
+    changeValue = (rowID, cellID) => {
+        const {table} = this.state;
+        const newTable = [...table];
+        const newRow = [...table[rowID]];
+        newRow[cellID] = "X";
+        newTable[rowID] = newRow;
+        this.setState({table: newTable});
+    }
+    render(){
+     const {size, users} = this.props;
+     const {table} = this.state;
+    return(
+    <div style={style.row}>
+       {console.log(users[1])}
+           <div style={style.playerName}>{users[0]}<br />играет за "X"</div>
+           <div style={style.column}>
+           {table.map((row, indexX) => {
+                return (
+                    <div style={style.row} key={indexX}>{
+                        row.map((cell, indexY) => {
+                            return(
+                                <Cell
+                                    value={cell}
+                                    key={indexY}
+                                    onChange={() => this.changeValue(indexX, indexY)}
+                                />
+                            )
+                        })
+                    }</div>
+
+                )
+           })}
+
+           </div>
+           <div style={style.playerName}>{users[1]}<br />играет за "O"</div>
+       </div>
+       )
+    }
+}
+
+const Game = ({playTheGame, size, users}) => (
     <div style={style.game}>
         <div style={style.gameName}>Игра началась</div>
-        <div><BattleTable size={size, users} /></div>
+        <div><BattleTable size={size} users={users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>
