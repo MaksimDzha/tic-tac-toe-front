@@ -39,6 +39,20 @@ const style = {
   }
 };
 
+
+const Widget = (props) => (
+   <div style={{color: 'red'}}>{props.children}</div>
+);
+
+const Appp = (props) => (
+  <Widget>
+    <div>Hi {props.target} {props.text}</div>
+    <div>bye{props.target} {props.text}</div>
+  </Widget>
+ );
+
+
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -63,6 +77,7 @@ class App extends Component {
 
       return (
       <div style={style.start}>
+          <div>{Appp}</div>
           <div style={style.gameName}>Добро пожаловать в игру крестики-нолики</div>
           <div style={style.row}>
               <div>Введите имя игрока 1:</div>

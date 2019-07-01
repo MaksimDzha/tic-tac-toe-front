@@ -53,22 +53,30 @@ const nextStep = () => (
     console.log("Ход!")
 )
 
+
+
+class Cell extends React.Component {
+  state = {
+    value: "",
+  };
+
+  render() {
+    return (
+      <div style={style.icon} onClick={() => this.setState({value: "X"})}>{this.state.value}</div>
+    );
+  }
+}
+
 const BattleTable = (size) => (
   <div style={style.column}>
     <div style={style.row}>
-        <div style={style.icon} onClick={() => nextStep()}></div>
-        <div style={style.icon} onClick={() => nextStep()}></div>
-        <div style={style.icon} onClick={() => nextStep()}></div>
+        <Cell /><Cell /><Cell />
     </div>
     <div style={style.row}>
-        <div style={style.icon} onClick={() => nextStep()}></div>
-        <div style={style.icon} onClick={() => nextStep()}></div>
-        <div style={style.icon} onClick={() => nextStep()}></div>
+        <Cell /><Cell /><Cell />
     </div>
     <div style={style.row}>
-        <div style={style.icon} onClick={() => nextStep()}></div>
-        <div style={style.icon} onClick={() => nextStep()}></div>
-        <div style={style.icon} onClick={() => nextStep()}></div>
+        <Cell /><Cell /><Cell />
     </div>
   </div>
 )
