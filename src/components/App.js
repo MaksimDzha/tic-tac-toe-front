@@ -39,53 +39,44 @@ const style = {
   }
 };
 
-
-const Widget = (props) => (
-   <div style={{color: 'red'}}>{props.children}</div>
-);
-
-const Appp = (props) => (
-  <Widget>
-    <div>Hi {props.target} {props.text}</div>
-    <div>bye{props.target} {props.text}</div>
-  </Widget>
- );
-
-
-
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
         size: 3,
         isGameRun: false,
-        users: null
+        users: ["Player 1", "Player 2"]
         };
         this.playTheGame = this.playTheGame.bind(this)
     }
+
+    changeName = (id, value) => (
+    this.setState(this.state.users.splice(id, 1, value)),
+    console.log(this.state.users[0])
+    )
 
     playTheGame(isGameRun){
         this.setState({isGameRun});
     }
 
+
   render() {
       if (this.state.isGameRun) {
         return (
-          <Game users={this.users} playTheGame={this.playTheGame} size={this.size} />
+          <Game playTheGame={this.playTheGame} size={this.state.size} users={this.state.users}/>
         )
       }
 
       return (
       <div style={style.start}>
-          <div>{Appp}</div>
           <div style={style.gameName}>Добро пожаловать в игру крестики-нолики</div>
           <div style={style.row}>
               <div>Введите имя игрока 1:</div>
-              <input />
+              <input onChange={(e) => this.changeName(0, e.target.value)} />
           </div>
           <div style={style.row}>
               <div>Введите имя игрока 2:</div>
-              <input />
+              <input onChange={(e) => this.changeName(1, e.target.value)} />
           </div>
           <div style={style.buttons}>
               <button onClick={() => this.setState({isGameRun: true})}>Начать игру</button>

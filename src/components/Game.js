@@ -19,6 +19,15 @@ const style = {
     backgroundColor: '#ffcc00',
     borderRadius: 10
   },
+    playerName: {
+      margin: 10,
+      height: 60,
+      fontSize: 18,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 10
+    },
     icon: {
       marginRight: 10,
       height: 80,
@@ -53,8 +62,6 @@ const nextStep = () => (
     console.log("Ход!")
 )
 
-
-
 class Cell extends React.Component {
   state = {
     value: "",
@@ -67,24 +74,29 @@ class Cell extends React.Component {
   }
 }
 
-const BattleTable = (size) => (
-  <div style={style.column}>
+const BattleTable = (size, users) => (
     <div style={style.row}>
-        <Cell /><Cell /><Cell />
+    {console.log(users[1])}
+        <div style={style.playerName}>Player 1<br />играет за "X"</div>
+        <div style={style.column}>
+          <div style={style.row}>
+              <Cell /><Cell /><Cell />
+          </div>
+          <div style={style.row}>
+              <Cell /><Cell /><Cell />
+          </div>
+          <div style={style.row}>
+              <Cell /><Cell /><Cell />
+          </div>
+        </div>
+        <div style={style.playerName}>Player 2<br />играет за "O"</div>
     </div>
-    <div style={style.row}>
-        <Cell /><Cell /><Cell />
-    </div>
-    <div style={style.row}>
-        <Cell /><Cell /><Cell />
-    </div>
-  </div>
 )
 
-const Game = ({users, playTheGame, size}) => (
+const Game = ({playTheGame}, size, users) => (
     <div style={style.game}>
         <div style={style.gameName}>Игра началась</div>
-        <div><BattleTable size={size} /></div>
+        <div><BattleTable size={size, users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>
