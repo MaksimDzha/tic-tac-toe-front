@@ -1,71 +1,6 @@
-import React, { Component } from 'react';
-
-
-const style = {
-  game: {
-    display: 'flex',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  gameName: {
-    margin: 10,
-    height: 60,
-    width: 300,
-    fontSize: 22,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffcc00',
-    borderRadius: 10
-  },
-    playerName: {
-      margin: 10,
-      height: 60,
-      fontSize: 18,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 10
-    },
-    icon: {
-      marginRight: 10,
-      height: 80,
-      width: 80,
-      fontSize: 40,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'Gold',
-      borderRadius: 20
-    },
-    column: {
-      margin: 10,
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'column'
-    },
-    row: {
-      margin: 10,
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'row'
-    },
-   buttons:{
-     margin: 10,
-     display: 'flex',
-     justifyContent: 'center',
-   }
-};
-
-class Cell extends Component {
-  render() {
-    return (
-      <div style={style.icon} onClick = {this.props.onChange}>{this.props.value}</div>
-    );
-  }
-}
+import React, { Component } from 'react'
+import style from './style.css'
+import Cell from './Cell.js'
 
 class BattleTable extends Component{
 
@@ -182,10 +117,8 @@ class BattleTable extends Component{
 }
 
 const Game = ({playTheGame, gameOver, size, users}) => (
-
-
     <div style={style.game}>
-        <div style={style.gameName}>Игра началась</div>
+        <div style={style.gameBegin}>Игра началась</div>
         <div><BattleTable gameOver={gameOver} size={size} users={users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>

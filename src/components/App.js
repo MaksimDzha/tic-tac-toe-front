@@ -1,43 +1,6 @@
 import React, { Component } from 'react';
 import Game from './Game';
-
-// import './style.css'
-
-const style = {
-  start: {
-    display: 'flex',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  gameName: {
-    margin: 10,
-    height: 60,
-    width: 600,
-    fontSize: 22,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffcc00',
-    borderRadius: 10
-  },
-  column: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  row: {
-    margin: 20,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  buttons:{
-    margin: 5,
-    display: 'flex',
-    justifyContent: 'center',
-  }
-};
+import style from './style.css';
 
 class App extends Component {
     constructor(props) {
