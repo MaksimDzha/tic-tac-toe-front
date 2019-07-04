@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import style from './style.css'
-import Cell from './Cell.js'
+import BattleField from './BattleField.js'
 import check from './check.js'
 
 class BattleTable extends Component{
@@ -23,11 +23,13 @@ class BattleTable extends Component{
         this.setState({step: (tStep == true ? false : true)});
         this.setState({count: this.state.count + 1});
         console.log(this.state.count);
+
     }
 
     changeValue = (rowID, cellID) => {
-        const {table} = this.state;
+        const table = this.state.table;
         const newTable = [...table];
+        if (this.state.count >= 9) this.props.gameOver(true, "", newTable);
         const newRow = [...table[rowID]];
         if (newRow[cellID] == "") {
             newRow[cellID] = this.state.step == true ? "X" : "O";
@@ -35,43 +37,23 @@ class BattleTable extends Component{
             if (check(newTable)){
                     const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
                     this.props.gameOver(true, winner, newTable);
-
                 }
+
             this.setState({table: newTable});
             this.nextStep();
         }
     }
 
     render(){
-        const {size, users} = this.props;
-        const {table} = this.state;
+        const users = this.props.users;
         return(
-        <div style={style.row}>
-            <div style={style.playerName}>{users[0]}<br />играет за "X"</div>
             <div style={style.column}>
-            <div style={style.playerName}>
-                {
+                <div style={style.playerName}>{
                     this.state.step === true ? ('Ход ' + users[0] + ' (X)') : ('Ход ' + users[1] + ' (O)')
                 }
+                </div>
+                {BattleField(this.state.table, this.changeValue)}
             </div>
-            {table.map((row, indexX) => {
-                return (
-                    <div style={style.row} key={indexX}>{
-                        row.map((cell, indexY) => {
-                            return(
-                                <Cell
-                                    value={cell}
-                                    key={indexY}
-                                    onChange={() => this.changeValue(indexX, indexY)}
-                                />
-                            )
-                        })
-                    }</div>
-                )
-            })}
-            </div>
-            <div style={style.playerName}>{users[1]}<br />играет за "O"</div>
-        </div>
         )
     }
 }
