@@ -59,8 +59,6 @@ const style = {
    }
 };
 
-
-
 class Cell extends Component {
   render() {
     return (
@@ -100,7 +98,6 @@ class BattleTable extends Component{
         if (this.check(newTable)){
                 const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
                 console.log("Победа " + winner);
-                gameOver(true);
             }
         this.setState({table: newTable});
         this.nextStep();
@@ -134,16 +131,17 @@ class BattleTable extends Component{
     checkLines = (checkTable, elem) => {
         var columns = true;
         var rows = true;
+        var result = false;
         checkTable.forEach((row, indexY) => {
             row.forEach((value, indexX) => {
-                        rows &= (checkTable[indexY][indexX] == elem);
+                        rows &= (value == elem);
                         columns &= (checkTable[indexX][indexY] == elem);
             })
-            if (rows || columns) return true;
+            if (rows || columns) result = true;
             columns = true;
             rows = true;
         })
-        return false;
+        return result;
     }
 
 
@@ -181,12 +179,12 @@ class BattleTable extends Component{
     }
 }
 
-const Game = ({playTheGame, gameOver, size, users}) => (
+const Game = ({playTheGame, size, users}) => (
 
 
     <div style={style.game}>
         <div style={style.gameName}>Игра началась</div>
-        <div><BattleTable gameOver={gameOver} size={size} users={users} /></div>
+        <div><BattleTable size={size} users={users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>
