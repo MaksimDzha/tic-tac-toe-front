@@ -34,9 +34,17 @@ class App extends Component {
         this.setState({isGameOver: isIt});
     }
 
+    validName = () => {
+        var users = this.state.users;
+        var empty = false;
+        users[0] == "" ? (users[0] = "Player 1", empty = true) : true;
+        users[1] == "" ? (users[1] = "Player 2", empty = true) : true;
+        if (empty) this.setState({users: users});
+    }
+
     render() {
         if (this.state.isGameRun) {
-
+            this.validName();
             return (
                 <Game playTheGame={this.playTheGame}
                 gameOver={this.gameOver}
@@ -63,12 +71,15 @@ class App extends Component {
                 <div style={style.row}>
                     <div>{"Введите имя игрока 1 (X): "}</div>
                     <input
+                        value={this.state.users[0]}
                         onChange={(e) => this.changeName(0, e.target.value)}
                     />
                 </div>
                 <div style={style.row}>
                     <div>{"Введите имя игрока 2 (O): "}</div>
-                    <input onChange={(e) => this.changeName(1, e.target.value)} />
+                    <input
+                        value={this.state.users[1]}
+                        onChange={(e) => this.changeName(1, e.target.value)} />
                 </div>
                 <div style={style.buttons}>
                     <button onClick={() => this.playTheGame(true)}>Начать игру</button>

@@ -6,12 +6,12 @@ const ResultTable = (table, winner) => (
         <div style={style.gameBegin}>Игра окончена</div>
         <div style={style.column}>
             <div style={style.playerName}>{(winner == "") ? "Ничья!" : ("Победитель: " + winner)}</div>
-            {table.map((row, indexY) => {
+            {table.map((row, indexX) => {
                 return (
-                    <div style={style.row}>{
-                        row.map((value, indexX) => {
+                    <div style={style.row} key={indexX}>{
+                        row.map((value, indexY) => {
                             return(
-                                <div style={style.icon}>{value}</div>
+                                <div style={style.icon} key={indexY}>{value}</div>
                             )
                         })
                     }</div>
