@@ -93,15 +93,16 @@ class BattleTable extends Component{
         const {table} = this.state;
         const newTable = [...table];
         const newRow = [...table[rowID]];
-        newRow[cellID] = this.state.step == true ? "X" : "O";
-        newTable[rowID] = newRow;
-        if (this.check(newTable)){
-                const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
-                console.log("Победа " + winner);
-            }
-        this.setState({table: newTable});
-        this.nextStep();
-
+        if (newRow[cellID] == "") {
+            newRow[cellID] = this.state.step == true ? "X" : "O";
+            newTable[rowID] = newRow;
+            if (this.check(newTable)){
+                    const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
+                    console.log("Победа " + winner);
+                }
+            this.setState({table: newTable});
+            this.nextStep();
+        }
     }
 
     check = (checkTable) => {
