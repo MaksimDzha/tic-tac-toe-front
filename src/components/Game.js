@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import style from './style.css'
 import Cell from './Cell.js'
+import check from './check.js'
 
 class BattleTable extends Component{
 
@@ -31,7 +32,7 @@ class BattleTable extends Component{
         if (newRow[cellID] == "") {
             newRow[cellID] = this.state.step == true ? "X" : "O";
             newTable[rowID] = newRow;
-            if (this.check(newTable)){
+            if (check(newTable)){
                     const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
                     this.props.gameOver(true, winner, newTable);
 
@@ -40,47 +41,6 @@ class BattleTable extends Component{
             this.nextStep();
         }
     }
-
-    check = (checkTable) => {
-        if (this.checkDiag(checkTable, "X") ||
-            this.checkDiag(checkTable, "O") ||
-            this.checkLines(checkTable, "X") ||
-            this.checkLines(checkTable, "O"))
-            return true;
-        return false;
-    }
-
-    checkDiag = (checkTable, elem) => {
-        var toRight = true;
-        var toLeft = true;
-        var i = 0;
-        checkTable.forEach((row, indexY) => {
-            row.forEach((value, indexX) => {
-                if (indexX == indexY) toRight &=(value == elem);
-                if ((indexX == 2-i)&(indexY == i)) toLeft &= (value == elem);
-            })
-            i++;
-        })
-        if (toRight || toLeft) return true;
-        return false;
-    }
-
-    checkLines = (checkTable, elem) => {
-        var columns = true;
-        var rows = true;
-        var result = false;
-        checkTable.forEach((row, indexY) => {
-            row.forEach((value, indexX) => {
-                        rows &= (value == elem);
-                        columns &= (checkTable[indexX][indexY] == elem);
-            })
-            if (rows || columns) result = true;
-            columns = true;
-            rows = true;
-        })
-        return result;
-    }
-
 
     render(){
         const {size, users} = this.props;
@@ -112,7 +72,7 @@ class BattleTable extends Component{
             </div>
             <div style={style.playerName}>{users[1]}<br />играет за "O"</div>
         </div>
-       )
+        )
     }
 }
 
@@ -125,7 +85,5 @@ const Game = ({playTheGame, gameOver, size, users}) => (
         </div>
     </div>
 )
-
-
 
 export default Game;
