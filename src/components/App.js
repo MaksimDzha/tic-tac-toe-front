@@ -45,17 +45,30 @@ class App extends Component {
         this.state = {
         size: 3,
         isGameRun: false,
+        isGameOver: false,
+        winner: "Ничья",
+        resultTable: "",
         users: ["Player 1", "Player 2"]
         };
-        this.playTheGame = this.playTheGame.bind(this)
+        this.playTheGame = this.playTheGame.bind(this),
+        this.gameOver = this.gameOver.bind(this)
     }
 
     changeName = (id, value) => (
-    this.setState(this.state.users.splice(id, 1, value))
+        this.setState(this.state.users.splice(  id, 1, value))
     )
 
-    playTheGame(isGameRun){
-        this.setState({isGameRun});
+    playTheGame(isIt){
+        this.setState({isGameOver: false});
+        this.setState({isGameRun: isIt});
+    }
+
+    gameOver(isIt, newWinner,result){
+        this.setState({isGameRun: false});
+        this.setState({winner: newWinner});
+        this.setState({resultTable: result});
+        this.setState({isGameOver: isIt});
+
     }
 
   render() {
@@ -67,6 +80,21 @@ class App extends Component {
             users={this.state.users}/>
         )
       }
+
+    if (this.state.isGameOver) {
+      return (
+          <div style={style.start}>
+                    <div style={style.gameName}>Игра окончена</div>
+                    <div style={style.column}>
+                        <div>{this.state.winner}</div>
+                        <div>{this.state.resultTable}</div>
+                    </div>
+                    <div style={style.buttons}>
+                        <button onClick={() => this.playTheGame(false)}>Начать новую игру</button>
+                    </div>
+                </div>
+      )
+    }
 
       return (
       <div style={style.start}>

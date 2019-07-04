@@ -98,7 +98,8 @@ class BattleTable extends Component{
             newTable[rowID] = newRow;
             if (this.check(newTable)){
                     const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
-                    console.log("Победа " + winner);
+                    this.props.gameOver(true, winner, newTable);
+
                 }
             this.setState({table: newTable});
             this.nextStep();
@@ -180,12 +181,12 @@ class BattleTable extends Component{
     }
 }
 
-const Game = ({playTheGame, size, users}) => (
+const Game = ({playTheGame, gameOver, size, users}) => (
 
 
     <div style={style.game}>
         <div style={style.gameName}>Игра началась</div>
-        <div><BattleTable size={size} users={users} /></div>
+        <div><BattleTable gameOver={gameOver} size={size} users={users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>
