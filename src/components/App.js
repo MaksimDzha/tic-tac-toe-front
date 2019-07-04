@@ -39,33 +39,59 @@ const style = {
   }
 };
 
+
+const endGame = ({playTheGame, table, winner}) => (
+        <div style={style.game}>
+            <div style={style.gameName}>Игра окончена</div>
+            <div>table</div>
+            <div style={style.buttons}>
+                <button onClick={() => playTheGame(false)}>Начать новую игру</button>
+            </div>
+        </div>
+)
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
         size: 3,
         isGameRun: false,
+        isGameOver: false,
         users: ["Player 1", "Player 2"]
         };
-        this.playTheGame = this.playTheGame.bind(this)
+        this.playTheGame = this.playTheGame.bind(this),
+        this.gameOver = this.gameOver.bind(this)
     }
 
     changeName = (id, value) => (
-    this.setState(this.state.users.splice(id, 1, value)),
-    console.log(this.state.users[0])
+    this.setState(this.state.users.splice(id, 1, value))
     )
 
     playTheGame(isGameRun){
         this.setState({isGameRun});
     }
 
+    gameOver(isGameOver){
+            this.setState({isGameOver});
+        }
+
 
   render() {
       if (this.state.isGameRun) {
         return (
-          <Game playTheGame={this.playTheGame} size={this.state.size} users={this.state.users}/>
+            <Game playTheGame={this.playTheGame}
+            gameOver={this.gameOver}
+            size={this.state.size}
+            users={this.state.users}/>
         )
       }
+
+      if (this.state.isGameOver) {
+          return (
+            <EndGame playTheGame={this.playTheGame} table={this.props.newTable} winner={this.props.winner}/>
+          )
+       }
+
 
       return (
       <div style={style.start}>

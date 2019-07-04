@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 
 const style = {
   game: {
@@ -58,11 +59,9 @@ const style = {
    }
 };
 
-const nextStep = () => (
-    console.log("Ход!")
-)
 
-class Cell extends React.Component {
+
+class Cell extends Component {
   render() {
     return (
       <div style={style.icon} onClick = {this.props.onChange}>{this.props.value}</div>
@@ -70,33 +69,97 @@ class Cell extends React.Component {
   }
 }
 
-class BattleTable extends React.Component{
+class BattleTable extends Component{
 
-  state = {
-    table: [
-        ["1","2","3"],
-        ["4","",""],
-        ["","8","9"]
-    ],
+    constructor(props) {
+        super(props);
+        this.state = {
+        count: 1,
+        step: true,
+        table: [
+            ["","",""],
+            ["","",""],
+            ["","",""]
+        ]}
+        this.changeValue = this.changeValue.bind(this)
+    };
 
-  };
+    nextStep = () => {
+        var tStep = this.state.step;
+        this.setState({step: (tStep == true ? false : true)});
+        this.setState({count: this.state.count + 1});
+        console.log(this.state.count);
+    }
+
     changeValue = (rowID, cellID) => {
         const {table} = this.state;
         const newTable = [...table];
         const newRow = [...table[rowID]];
-        newRow[cellID] = "X";
+        newRow[cellID] = this.state.step == true ? "X" : "O";
         newTable[rowID] = newRow;
+        if (this.check(newTable)){
+                const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
+                console.log("Победа " + winner);
+                gameOver(true);
+            }
         this.setState({table: newTable});
+        this.nextStep();
+
     }
+
+    check = (checkTable) => {
+        if (this.checkDiag(checkTable, "X") ||
+            this.checkDiag(checkTable, "O") ||
+            this.checkLines(checkTable, "X") ||
+            this.checkLines(checkTable, "O"))
+            return true;
+        return false;
+    }
+
+    checkDiag = (checkTable, elem) => {
+        var toRight = true;
+        var toLeft = true;
+        var i = 0;
+        checkTable.forEach((row, indexY) => {
+            row.forEach((value, indexX) => {
+                if (indexX == indexY) toRight &=(value == elem);
+                if ((indexX == 2-i)&(indexY == i)) toLeft &= (value == elem);
+            })
+            i++;
+        })
+        if (toRight || toLeft) return true;
+        return false;
+    }
+
+    checkLines = (checkTable, elem) => {
+        var columns = true;
+        var rows = true;
+        checkTable.forEach((row, indexY) => {
+            row.forEach((value, indexX) => {
+                        rows &= (checkTable[indexY][indexX] == elem);
+                        columns &= (checkTable[indexX][indexY] == elem);
+            })
+            if (rows || columns) return true;
+            columns = true;
+            rows = true;
+        })
+        return false;
+    }
+
+
     render(){
-     const {size, users} = this.props;
-     const {table} = this.state;
-    return(
-    <div style={style.row}>
-       {console.log(users[1])}
-           <div style={style.playerName}>{users[0]}<br />играет за "X"</div>
-           <div style={style.column}>
-           {table.map((row, indexX) => {
+        const {size, users} = this.props;
+        const {table} = this.state;
+        return(
+        <div style={style.row}>
+            <div style={style.playerName}>{users[0]}<br />играет за "X"</div>
+            <div style={style.column}>
+            <div style={style.playerName}>
+                {
+                    this.state.step === true ? ('Ход ' + users[0] + ' (X)') : ('Ход ' + users[1] + ' (O)')
+                }
+            </div>
+            {table.map((row, indexX) => {
                 return (
                     <div style={style.row} key={indexX}>{
                         row.map((cell, indexY) => {
@@ -109,21 +172,21 @@ class BattleTable extends React.Component{
                             )
                         })
                     }</div>
-
                 )
-           })}
-
-           </div>
-           <div style={style.playerName}>{users[1]}<br />играет за "O"</div>
-       </div>
+            })}
+            </div>
+            <div style={style.playerName}>{users[1]}<br />играет за "O"</div>
+        </div>
        )
     }
 }
 
-const Game = ({playTheGame, size, users}) => (
+const Game = ({playTheGame, gameOver, size, users}) => (
+
+
     <div style={style.game}>
         <div style={style.gameName}>Игра началась</div>
-        <div><BattleTable size={size} users={users} /></div>
+        <div><BattleTable gameOver={gameOver} size={size} users={users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>
