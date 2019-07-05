@@ -18,7 +18,7 @@ const BattleField = (table, changeValue) => (
                         <Cell
                             value={cell}
                             key={indexY}
-                            onChange={() => changeValue(indexX, indexY)}
+                            onChange={() => changeValue(table, indexX, indexY)}
                         />
                     )
                 })

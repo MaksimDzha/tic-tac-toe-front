@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import style from './style.css'
 import BattleField from './BattleField.js'
 import check from './check.js'
+import createTable from './createTable.js'
 
 class BattleTable extends Component{
 
@@ -9,12 +10,8 @@ class BattleTable extends Component{
         super(props);
         this.state = {
         count: 1,
-        step: true,
-        table: [
-            ["","",""],
-            ["","",""],
-            ["","",""]
-        ]}
+        table: createTable(3),
+        step: true}
         this.changeValue = this.changeValue.bind(this)
     };
 
@@ -24,8 +21,7 @@ class BattleTable extends Component{
         this.setState({count: this.state.count + 1});
     }
 
-    changeValue = (rowID, cellID) => {
-        const table = this.state.table;
+    changeValue = (table, rowID, cellID) => {
         const newTable = [...table];
         if (this.state.count >= 9) this.props.gameOver(true, "", newTable);
         const newRow = [...table[rowID]];
@@ -36,7 +32,6 @@ class BattleTable extends Component{
                     const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
                     this.props.gameOver(true, winner, newTable);
                 }
-
             this.setState({table: newTable});
             this.nextStep();
         }
