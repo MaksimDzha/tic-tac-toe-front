@@ -10,7 +10,7 @@ class BattleTable extends Component{
         super(props);
         this.state = {
         count: 1,
-        table: createTable(3),
+        table: createTable(this.props.size),
         step: true}
         this.changeValue = this.changeValue.bind(this)
     };

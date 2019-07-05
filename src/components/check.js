@@ -13,10 +13,11 @@ const checkDiag = (checkTable, elem) => {
     var toRight = true;
     var toLeft = true;
     var i = 0;
+    const size = checkTable.length - 1;
     checkTable.forEach((row, indexY) => {
         row.forEach((value, indexX) => {
             if (indexX == indexY) toRight &=(value == elem);
-            if ((indexX == 2-i)&(indexY == i)) toLeft &= (value == elem);
+            if ((indexX == size-i)&(indexY == i)) toLeft &= (value == elem);
         })
         i++;
     })
