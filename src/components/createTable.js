@@ -4,7 +4,6 @@ const createLine = (size) => {
     const line = [""];
     for(var i = 0; i<size; i++)
         line.splice(i, 1, "");
-    console.log(line);
     return line;
 }
 
@@ -13,7 +12,6 @@ const createTable = (size) => {
     for(var i = 0; i<size; i++){
         newTable.splice(i, 1, createLine(size));
     }
-    console.log(newTable);
     return newTable;
 }
 

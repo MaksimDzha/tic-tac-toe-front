@@ -7,7 +7,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        size: 3,
+        size: 6,
+        sizeWin: 4,
         isGameRun: false,
         isGameOver: false,
         winner: "",
@@ -55,6 +56,7 @@ class App extends Component {
                 <Game playTheGame={this.playTheGame}
                 gameOver={this.gameOver}
                 size={this.state.size}
+                sizeWin={this.state.sizeWin}
                 users={this.state.users}/>
             )
         }
@@ -62,6 +64,7 @@ class App extends Component {
         if (this.state.isGameOver) {
             return (
                 <div style={style.start}>
+                    <div style={style.gameEnd}>Игра окончена</div>
                     {ResultTable(this.state.resultTable, this.state.winner)}
                     <div style={style.buttons}>
                         <button onClick={() => this.playTheGame(true)}>Повторить партию</button>
@@ -74,7 +77,7 @@ class App extends Component {
         return (
             <div style={style.start}>
                 <div style={style.gameName}>Добро пожаловать в игру крестики-нолики</div>
-                <div style={style.row}>
+                <div style={style.rowStart}>
                     <div>{"Введите имя игрока 1 (X): "}</div>
                     <input
                         style={style.inputStyle}
@@ -83,7 +86,7 @@ class App extends Component {
                         onChange={(e) => this.onChangeName(0, e.target.value)}
                     />
                 </div>
-                <div style={style.row}>
+                <div style={style.rowStart}>
                     <div>{"Введите имя игрока 2 (O): "}</div>
                     <input
                         style={style.inputStyle}

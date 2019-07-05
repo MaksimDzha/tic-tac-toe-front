@@ -23,12 +23,13 @@ class BattleTable extends Component{
 
     changeValue = (table, rowID, cellID) => {
         const newTable = [...table];
-        if (this.state.count >= 9) this.props.gameOver(true, "", newTable);
+        const size = this.props.size;
+        if (this.state.count >= size*size) this.props.gameOver(true, "", newTable);
         const newRow = [...table[rowID]];
         if (newRow[cellID] == "") {
             newRow[cellID] = this.state.step == true ? "X" : "O";
             newTable[rowID] = newRow;
-            if (check(newTable)){
+            if (check(newTable, this.props.sizeWin)){
                     const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
                     this.props.gameOver(true, winner, newTable);
                 }
@@ -51,10 +52,10 @@ class BattleTable extends Component{
     }
 }
 
-const Game = ({playTheGame, gameOver, size, users}) => (
+const Game = ({playTheGame, gameOver, size, sizeWin, users}) => (
     <div style={style.game}>
         <div style={style.gameBegin}>Игра началась</div>
-        <div><BattleTable gameOver={gameOver} size={size} users={users} /></div>
+        <div><BattleTable gameOver={gameOver} size={size} sizeWin={sizeWin} users={users} /></div>
         <div style={style.buttons}>
             <button onClick={() => playTheGame(false)}>Закончить игру</button>
         </div>

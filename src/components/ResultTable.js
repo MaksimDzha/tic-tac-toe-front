@@ -3,7 +3,6 @@ import style from './style.css'
 
 const ResultTable = (table, winner) => (
     <div>
-        <div style={style.gameBegin}>Игра окончена</div>
         <div style={style.column}>
             <div style={style.playerName}>{(winner == "") ? "Ничья!" : ("Победитель: " + winner)}</div>
             {table.map((row, indexX) => {
