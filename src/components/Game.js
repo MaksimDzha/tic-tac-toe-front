@@ -22,8 +22,6 @@ class BattleTable extends Component{
         var tStep = this.state.step;
         this.setState({step: (tStep == true ? false : true)});
         this.setState({count: this.state.count + 1});
-        console.log(this.state.count);
-
     }
 
     changeValue = (rowID, cellID) => {

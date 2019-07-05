@@ -73,7 +73,11 @@ const style = {
     margin: 10,
     display: 'flex',
     justifyContent: 'center',
-  }
+  },
+    inputStyle:{
+      height: 15,
+      width: 200,
+    }
 };
 
 

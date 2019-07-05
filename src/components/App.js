@@ -18,11 +18,26 @@ class App extends Component {
         this.gameOver = this.gameOver.bind(this)
     }
 
-    changeName = (id, value) => (
+    onChangeName = (id, value) => {
         this.setState(this.state.users.splice(id, 1, value))
-    )
+    }
+
+    checkName = (id, value) => {
+        if (value == "") {
+            id == 0 ? value = "Player 1" : value = "Player 2";
+            this.setState(this.state.users.splice(id, 1, value));
+        }
+        const regex = /^[а-яА-яёЁa-zA-Z0-9]+([_\s\-]?[а-яА-яёЁa-zA-Z0-9])*$/;
+        if (!regex.test(value)) {
+            id == 0 ? value = "Player 1" : value = "Player 2";
+            this.setState(this.state.users.splice(id, 1, value));
+        }
+    }
 
     playTheGame(isIt){
+        const users = this.state.users;
+        const checkUsers = [...users];
+        users.forEach((value, id) => {this.checkName(id, value)});
         this.setState({isGameOver: false});
         this.setState({isGameRun: isIt});
     }
@@ -34,17 +49,8 @@ class App extends Component {
         this.setState({isGameOver: isIt});
     }
 
-    validName = () => {
-        var users = this.state.users;
-        var empty = false;
-        users[0] == "" ? (users[0] = "Player 1", empty = true) : true;
-        users[1] == "" ? (users[1] = "Player 2", empty = true) : true;
-        if (empty) this.setState({users: users});
-    }
-
     render() {
         if (this.state.isGameRun) {
-            this.validName();
             return (
                 <Game playTheGame={this.playTheGame}
                 gameOver={this.gameOver}
@@ -71,18 +77,25 @@ class App extends Component {
                 <div style={style.row}>
                     <div>{"Введите имя игрока 1 (X): "}</div>
                     <input
+                        style={style.inputStyle}
                         value={this.state.users[0]}
-                        onChange={(e) => this.changeName(0, e.target.value)}
+                        placeholder={"Введите имя первого игрока"}
+                        onChange={(e) => this.onChangeName(0, e.target.value)}
                     />
                 </div>
                 <div style={style.row}>
                     <div>{"Введите имя игрока 2 (O): "}</div>
                     <input
+                        style={style.inputStyle}
                         value={this.state.users[1]}
-                        onChange={(e) => this.changeName(1, e.target.value)} />
+                        placeholder={"Введите имя второго игрока"}
+                        onChange={(e) => this.onChangeName(1, e.target.value)}
+                    />
                 </div>
                 <div style={style.buttons}>
-                    <button onClick={() => this.playTheGame(true)}>Начать игру</button>
+                    <button onClick={() => {this.playTheGame(true)}}>
+                        Начать игру
+                    </button>
                 </div>
             </div>
         )
