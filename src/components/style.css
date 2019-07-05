@@ -1,68 +1,77 @@
 import React from 'react'
 
 const style = {
-  start: {
-    display: 'flex',
-    height: '100%',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
+    start: {
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
     gameBegin: {
-      margin: 10,
-      height: 60,
-      width: 300,
-      fontSize: 22,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#ffcc00',
-      borderRadius: 5
+        margin: 10,
+        height: 60,
+        width: 200,
+        fontSize: 22,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'lightgreen',
+        borderRadius: 5
     },
     gameEnd: {
-      margin: 5,
-      height: 60,
-      width: 200,
-      fontSize: 22,
-      display: 'flex',
-      alignItems: 'center',
-      alignContent: 'center',
-      justifyItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#ffcc00',
-      borderRadius: 5
+        margin: 5,
+        height: 60,
+        width: 220,
+        fontSize: 30,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ffcc00',
+        borderRadius: 5
     },
-  gameName: {
-    margin: 5,
-    height: 60,
-    width: 600,
-    fontSize: 22,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffcc00',
-    borderRadius: 5
-  },
+    gameName: {
+        margin: 5,
+        height: 60,
+        width: 600,
+        fontSize: 22,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ffcc00',
+        borderRadius: 5
+    },
     game: {
-      display: 'flex',
-      height: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column'
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
     },
 
-      playerName: {
-        margin: 5,
+    playerName: {
+        marginBottom: 5,
         height: 20,
         fontSize: 18,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 5
-      },
-      icon: {
+        justifyContent: 'center'
+    },
+    winner: {
+        margin: 10,
+        borderBottom: '3px solid currentColor',
+        height: 35,
+        fontSize: 25,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    customize: {
+        marginLeft: 10
+    },
+    icon: {
         margin: 5,
         height: 50,
         width: 50,
@@ -72,37 +81,47 @@ const style = {
         justifyContent: 'center',
         backgroundColor: 'Gold',
         borderRadius: 5
-      },
+    },
     column: {
-      margin: 5,
-      display: 'flex',
-      alignItems: 'center',
-      alignContent: 'center',
-      justifyItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column'
+        margin: 5,
+        display: 'flex',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
     },
     rowStart: {
-          margin: 10,
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'row'
-        },
-    row: {
-      marginTop: 0,
-      marginBottom: 0,
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'row'
+        margin: 10,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row'
     },
-  buttons:{
-    margin: 10,
-    display: 'flex',
-    justifyContent: 'center',
-  },
-    inputStyle:{
-      height: 15,
-      width: 200,
+    row: {
+        marginTop: 0,
+        marginBottom: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row'
+    },
+    buttons:{
+        margin: 10,
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    inputNameStyle:{
+        marginLeft: 5,
+        height: 15,
+        width: 200,
+    },
+    inputNumberStyle:{
+        marginLeft: 5,
+        marginRight: 15,
+        height: 15,
+        width: 25,
+    },
+    button:{
+        margin: 5
     }
 };
 
