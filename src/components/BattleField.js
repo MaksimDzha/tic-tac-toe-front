@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
 import style from './style.css'
-
-class Cell extends Component {
-    render() {
-        return (
-            <div style={style.icon} onClick = {this.props.onChange}>{this.props.value}</div>
-        );
-    }
-}
+import Cell from './Cell'
 
 const BattleField = (table, changeValue) => (
     table.map((row, indexX) => {

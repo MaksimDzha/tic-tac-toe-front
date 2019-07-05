@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import style from './style.css'
-import BattleField from './BattleField.js'
-import check from './check.js'
-import createTable from './createTable.js'
+import BattleField from './BattleField'
+import check from './check'
+import createTable from './createTable'
+import ai from './ai'
 
 class BattleTable extends Component{
 
@@ -19,6 +20,9 @@ class BattleTable extends Component{
         var tStep = this.state.step;
         this.setState({step: (tStep == true ? false : true)});
         this.setState({count: this.state.count + 1});
+        console.log("Game 1");
+        if (!tStep) ai(this.state.table, this.changeValue);
+        console.log("Game 2");
     }
 
     changeValue = (table, rowID, cellID) => {
@@ -26,7 +30,8 @@ class BattleTable extends Component{
         const size = this.props.size;
         if (this.state.count >= size*size) this.props.gameOver(true, "", newTable);
         const newRow = [...table[rowID]];
-        if (newRow[cellID] == "") {
+        if (newRow[cellID] == " ") {
+            console.log("changeValue 1");
             newRow[cellID] = this.state.step == true ? "X" : "O";
             newTable[rowID] = newRow;
             if (check(newTable, this.props.sizeWin)){

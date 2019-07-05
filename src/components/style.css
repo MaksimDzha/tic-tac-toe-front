@@ -50,7 +50,6 @@ const style = {
         justifyContent: 'center',
         flexDirection: 'column'
     },
-
     playerName: {
         marginBottom: 5,
         height: 20,
@@ -72,7 +71,7 @@ const style = {
         marginLeft: 10
     },
     icon: {
-        margin: 5,
+        margin: 3,
         height: 50,
         width: 50,
         fontSize: 40,
