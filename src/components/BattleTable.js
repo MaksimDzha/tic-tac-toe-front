@@ -12,30 +12,49 @@ class BattleTable extends Component{
         this.state = {
         count: 1,
         table: createTable(this.props.size),
-        step: true}
-        this.changeValue = this.changeValue.bind(this)
+        step: "X"}
+        this.playerTurn = this.playerTurn.bind(this);
+        this.aiTurn = this.aiTurn.bind(this)
     };
 
-    nextStep = () => {
-        var tStep = this.state.step;
-        this.setState({step: (tStep == true ? false : true)});
+    nextStep = (newTable) => {
+        const tStep = this.state.step == "X" ? "O" : "X";
+        const size = this.props.size;
+        const newCount = this.state.count + 1;
+        if (newCount > size*size) this.props.gameOver(true, "", newTable);
+        this.setState({step: tStep});
         this.setState({count: this.state.count + 1});
+        if ((tStep == "O")&(newCount <= size*size)) this.aiTurn(newTable);
     }
 
-    changeValue = (table, rowID, cellID) => {
+    aiTurn = (newTable) => {
+        console.log("aiTurn");
+        const size = newTable.length;
+        var x = Math.floor(Math.random()*(size));
+        var y = Math.floor(Math.random()*(size));
+        while (!newTable[x][y] == "") {
+            x = Math.floor(Math.random()*(size));
+            y = Math.floor(Math.random()*(size));
+        }
+        newTable[x][y] = "O";
+        if (check(newTable, this.props.sizeWin)){
+               this.props.gameOver(true, "Computer", newTable);
+           }
+        this.setState({table: newTable}, function(){this.nextStep(newTable)});
+    }
+
+    playerTurn = (table, rowID, cellID) => {
+        console.log("playerTurn " + this.state.step);
         const newTable = [...table];
-        const size = this.props.size;
-        if (this.state.count >= size*size) this.props.gameOver(true, "", newTable);
         const newRow = [...table[rowID]];
         if (newRow[cellID] == "") {
-            newRow[cellID] = this.state.step == true ? "X" : "O";
+            newRow[cellID] = this.state.step;
             newTable[rowID] = newRow;
             if (check(newTable, this.props.sizeWin)){
-                    const winner = this.state.step == true ? this.props.users[0] : this.props.users[1];
+                    const winner = this.state.step == "X" ? this.props.users[0] : this.props.users[1];
                     this.props.gameOver(true, winner, newTable);
                 }
-            this.setState({table: newTable});
-            this.nextStep();
+            this.setState({table: newTable}, function(){this.nextStep(newTable)});
         }
     }
 
@@ -44,10 +63,10 @@ class BattleTable extends Component{
         return(
             <div style={style.column}>
                 <div style={style.playerName}>{
-                    this.state.step === true ? ('Ход ' + users[0] + ' (X)') : ('Ход ' + users[1] + ' (O)')
+                    this.state.step === "X" ? ('Ход ' + users[0] + ' (X)') : ('Ход ' + users[1] + ' (O)')
                 }
                 </div>
-                <div id = "cells">{Cells(this.state.table, this.changeValue)}</div>
+                <div>{Cells(this.state.table, this.playerTurn)}</div>
             </div>
         )
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import style from './style.css'
 import Cell from './Cell'
 
-const Cells = (table, changeValue) => (
+const Cells = (table, playerTurn) => (
     table.map((row, indexX) => {
         return (
             <div style={style.row} key={indexX}>{
@@ -11,7 +11,7 @@ const Cells = (table, changeValue) => (
                         <Cell
                             value={cell}
                             key={indexY}
-                            onChange={() => changeValue(table, indexX, indexY)}
+                            playerChange={() => playerTurn(table, indexX, indexY)}
                         />
                     )
                 })
