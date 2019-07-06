@@ -4,6 +4,7 @@ import Cells from './Cells'
 import check from './Logic/check'
 import createTable from './Logic/createTable'
 import ai from './Logic/ai'
+import ai3x3 from './Logic/ai3x3'
 
 class BattleTable extends Component{
 
