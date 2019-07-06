@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import style from './style.css'
 import Cell from './Cell'
 
-const BattleField = (table, changeValue) => (
+const Cells = (table, changeValue) => (
     table.map((row, indexX) => {
         return (
             <div style={style.row} key={indexX}>{
@@ -20,4 +20,4 @@ const BattleField = (table, changeValue) => (
     })
 )
 
-export default BattleField;
+export default Cells;

@@ -1,9 +1,9 @@
 import React from 'react'
 
 const createLine = (size) => {
-    const line = [" "];
+    const line = [""];
     for(var i = 0; i<size; i++)
-        line.splice(i, 1, " ");
+        line.splice(i, 1, "");
     return line;
 }
 
