@@ -24,19 +24,11 @@ class BattleTable extends Component{
         if (newCount > size*size) this.props.gameOver(true, "", newTable);
         this.setState({step: tStep});
         this.setState({count: this.state.count + 1});
-        if ((tStep == "O")&(newCount <= size*size)) this.aiTurn(newTable);
+        if ((tStep == "O")&(newCount <= size*size)&(this.props.aiOn)) this.aiTurn(newTable);
     }
 
     aiTurn = (newTable) => {
-        console.log("aiTurn");
-        const size = newTable.length;
-        var x = Math.floor(Math.random()*(size));
-        var y = Math.floor(Math.random()*(size));
-        while (!newTable[x][y] == "") {
-            x = Math.floor(Math.random()*(size));
-            y = Math.floor(Math.random()*(size));
-        }
-        newTable[x][y] = "O";
+        ai(newTable);
         if (check(newTable, this.props.sizeWin)){
                this.props.gameOver(true, "Computer", newTable);
            }
@@ -44,7 +36,6 @@ class BattleTable extends Component{
     }
 
     playerTurn = (table, rowID, cellID) => {
-        console.log("playerTurn " + this.state.step);
         const newTable = [...table];
         const newRow = [...table[rowID]];
         if (newRow[cellID] == "") {

@@ -13,11 +13,63 @@ class App extends Component {
         isGameOver: false,
         winner: "",
         resultTable: "",
+        computer: false,
         users: ["Player 1", "Player 2"]
         };
         this.playTheGame = this.playTheGame.bind(this),
         this.gameOver = this.gameOver.bind(this)
     }
+
+    aiOn = (OnOff) => (
+        this.setState({computer: OnOff})
+    )
+
+    changeInputName = () => {
+        const checkbox = document.getElementById("checkboxAI");
+        var aiOn = false;
+        checkbox.addEventListener('change', event => {
+            if(event.target.checked){
+                this.aiOn(true)
+            } else {
+                this.aiOn(false)
+            }
+        });
+    }
+
+    inputName = () => (
+        <div style={style.rowStart}>
+            <div>{"Введите имя игрока 1 (X): "}</div>
+            <input
+                style={style.inputNameStyle}
+                value={this.state.users[0]}
+                placeholder={"Введите имя первого игрока"}
+                onChange={(e) => this.onChangeName(0, e.target.value)}
+            />
+        </div>
+    )
+
+    inputNames = () => (
+        <div>
+            <div style={style.rowStart}>
+                <div>{"Введите имя игрока 1 (X): "}</div>
+                <input
+                    style={style.inputNameStyle}
+                    value={this.state.users[0]}
+                    placeholder={"Введите имя первого игрока"}
+                    onChange={(e) => this.onChangeName(0, e.target.value)}
+                />
+            </div>
+            <div style={style.rowStart}>
+                <div>{"Введите имя игрока 2 (O): "}</div>
+                <input
+                    style={style.inputNameStyle}
+                    value={this.state.users[1]}
+                    placeholder={"Введите имя второго игрока"}
+                    onChange={(e) => this.onChangeName(1, e.target.value)}
+                />
+            </div>
+        </div>
+    )
 
     onChangeName = (id, value) => {
         this.setState(this.state.users.splice(id, 1, value))
@@ -80,7 +132,8 @@ class App extends Component {
                 gameOver={this.gameOver}
                 size={this.state.size}
                 sizeWin={this.state.sizeWin}
-                users={this.state.users}/>
+                users={this.state.users}
+                aiOn={this.state.computer}/>
             )
         }
 
@@ -100,23 +153,10 @@ class App extends Component {
         return (
             <div style={style.start}>
                 <div style={style.gameName}>Добро пожаловать в игру крестики-нолики</div>
+                <div>{this.state.computer ? this.inputName() : this.inputNames()}</div>
                 <div style={style.rowStart}>
-                    <div>{"Введите имя игрока 1 (X): "}</div>
-                    <input
-                        style={style.inputNameStyle}
-                        value={this.state.users[0]}
-                        placeholder={"Введите имя первого игрока"}
-                        onChange={(e) => this.onChangeName(0, e.target.value)}
-                    />
-                </div>
-                <div style={style.rowStart}>
-                    <div>{"Введите имя игрока 2 (O): "}</div>
-                    <input
-                        style={style.inputNameStyle}
-                        value={this.state.users[1]}
-                        placeholder={"Введите имя второго игрока"}
-                        onChange={(e) => this.onChangeName(1, e.target.value)}
-                    />
+                    <div>{"Хотите с компьютером?"}</div>
+                    <input type={'checkbox'} id="checkboxAI" onClick={() => this.changeInputName()}/>
                 </div>
                 <div style={style.rowStart}>
                     <div style={style.customize}>{"Размер поля (3 - 10): "}</div>
