@@ -1,0 +1,43 @@
+import React from 'react'
+
+const style = {
+    winner: {
+        margin: 10,
+        borderBottom: '3px solid currentColor',
+        height: 35,
+        fontSize: 25,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    icon: {
+        margin: 3,
+        height: 50,
+        width: 50,
+        fontSize: 40,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'Gold',
+        borderRadius: 5
+    },
+    column: {
+        margin: 5,
+        display: 'flex',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
+    row: {
+        marginTop: 0,
+        marginBottom: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'row'
+    }
+};
+
+
+export default style;

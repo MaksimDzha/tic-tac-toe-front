@@ -1,8 +1,4 @@
 import React from 'react'
-import App from './App'
-import Game from './Game'
-import Cells from './Cells'
-import Cell from './Cell'
 
 const ai = (table) => {
     const size = table.length;

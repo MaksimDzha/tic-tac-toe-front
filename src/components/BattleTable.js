@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import style from './style.css'
 import Cells from './Cells'
-import check from './check'
-import createTable from './createTable'
-import ai from './ai'
+import check from './Logic/check'
+import createTable from './Logic/createTable'
+import ai from './Logic/ai'
 
 class BattleTable extends Component{
 
     constructor(props) {
         super(props);
         this.state = {
-        count: 1,
-        table: createTable(this.props.size),
-        step: "X"}
+            count: 1,
+            table: createTable(this.props.size),
+            step: "X"
+        }
         this.playerTurn = this.playerTurn.bind(this);
         this.aiTurn = this.aiTurn.bind(this)
     };

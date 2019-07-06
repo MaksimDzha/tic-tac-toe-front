@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Game from './Game'
-import ResultTable from "./ResultTable"
+import ResultTable from "./Result/ResultTable"
 import style from './style.css'
 
 class App extends Component {
@@ -116,6 +116,7 @@ class App extends Component {
         users.forEach((value, id) => {this.checkName(id, value)});
         this.setState({isGameOver: false});
         this.setState({isGameRun: isIt});
+        if (!isIt) this.setState({computer: false})
     }
 
     gameOver(isIt, newWinner, result){
