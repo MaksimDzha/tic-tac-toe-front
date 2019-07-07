@@ -5,6 +5,7 @@ import check from './Logic/check'
 import newCheck from './Logic/newCheck'
 import createTable from './Logic/createTable'
 import ai from './Logic/ai'
+import aiHard from './Logic/aiHard'
 
 class BattleTable extends Component{
 
@@ -30,7 +31,7 @@ class BattleTable extends Component{
     }
 
     aiTurn = (newTable) => {
-        ai(newTable);
+        aiHard(newTable, this.props.sizeWin, -1);
         const line = newCheck(newTable, this.props.sizeWin);
         if (line != null){
             this.props.gameOver(true, "Computer", newTable, line);
