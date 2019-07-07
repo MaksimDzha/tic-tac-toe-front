@@ -119,10 +119,10 @@ class App extends Component {
         if (!isIt) this.setState({computer: false})
     }
 
-    gameOver(isIt, newWinner, result){
+    gameOver(isIt, newWinner, table, resultLine){
         this.setState({isGameRun: false});
         this.setState({winner: newWinner});
-        this.setState({resultTable: result});
+        this.setState({resultTable: table});
         this.setState({isGameOver: isIt});
     }
 
