@@ -34,7 +34,13 @@ class BattleTable extends Component{
         aiHard(newTable, this.props.sizeWin, -1, 0);
         const line = newCheck(newTable, this.props.sizeWin);
         if (line != null){
-            this.props.gameOver(true, "Computer", newTable, line);
+            newTable.forEach((row, indexX) =>
+                row.forEach((item, indexY) => (
+                    newTable[indexX][indexY] = ["", item]
+                ))
+            )
+            line.forEach((item) => {newTable[item[0]][item[1]][0] = "win"})
+            this.props.gameOver(true, "Computer", newTable);
         }
         this.setState({table: newTable}, function(){this.nextStep(newTable)});
     }
@@ -47,9 +53,15 @@ class BattleTable extends Component{
             newTable[rowID] = newRow;
             const line = newCheck(newTable, this.props.sizeWin);
             if (line != null){
-                    const winner = this.state.step == "X" ? this.props.users[0] : this.props.users[1];
-                    this.props.gameOver(true, winner, newTable, line);
-                }
+                const winner = this.state.step == "X" ? this.props.users[0] : this.props.users[1];
+                newTable.forEach((row, indexX) =>
+                    row.forEach((item, indexY) => (
+                        newTable[indexX][indexY] = ["", item]
+                    ))
+                )
+                line.forEach((item) => {newTable[item[0]][item[1]][0] = "win"})
+                this.props.gameOver(true, winner, newTable);
+            }
             this.setState({table: newTable}, function(){this.nextStep(newTable)});
         }
     }

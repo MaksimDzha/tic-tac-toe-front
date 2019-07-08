@@ -21,6 +21,17 @@ const style = {
         backgroundColor: 'Gold',
         borderRadius: 5
     },
+    iconWin: {
+        margin: 3,
+        height: 50,
+        width: 50,
+        fontSize: 40,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'Red',
+        borderRadius: 5
+    },
     column: {
         margin: 5,
         display: 'flex',
