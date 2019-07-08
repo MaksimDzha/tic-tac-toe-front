@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import style from './style.css'
 import Cells from './Cells'
-import check from './Logic/check'
 import newCheck from './Logic/newCheck'
 import createTable from './Logic/createTable'
-import ai from './Logic/ai'
 import aiHard from './Logic/aiHard'
 
 class BattleTable extends Component{
@@ -92,7 +90,7 @@ class BattleTable extends Component{
         return(
             <div style={style.column}>
                 <div style={style.playerName}>{
-                    this.state.step === "X" ? ('Ход ' + users[0] + ' (X)') : ('Ход ' + users[1] + ' (O)')
+                    this.state.step === "X" ? ('Ход ' + users[0]) : ('Ход ' + users[1])
                 }
                 </div>
                 <div>{Cells(this.state.table, this.playerTurn)}</div>

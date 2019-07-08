@@ -55,12 +55,12 @@ class App extends Component {
     inputName = () => (
         <div>
             <div style={style.rowStart}>
-                <div>{"Введите имя игрока 1 (X): "}</div>
+                <div>{"Введите имя игрока 1: "}</div>
                 <input
                     style={style.inputNameStyle}
                     value={this.state.users[0]}
                     placeholder={"Введите имя первого игрока"}
-                    onChange={(e) => this.onChangeName(0, e.target.value)}
+                    onChange={(e) => (this.onChangeName(0, e.target.value))}
                 />
             </div>
             <div style={style.rowStart}>
@@ -94,8 +94,9 @@ class App extends Component {
     )
 
     onChangeName = (id, value) => {
-        this.setState(this.state.users.splice(id, 1, value))
+        this.setState(this.state.users.splice(id, 1, value));
     }
+
 
     onChangeSize = (value) => {
             const regex = /^[0-9]*$/;
@@ -153,12 +154,14 @@ class App extends Component {
 
     render() {
         if (this.state.isGameRun) {
+            const newUsers = [...this.state.users];
+            if (this.state.computer && this.state.computerFirst) newUsers[1] = newUsers[0];
             return (
                 <Game playTheGame={this.playTheGame}
                 gameOver={this.gameOver}
                 size={this.state.size}
                 sizeWin={this.state.sizeWin}
-                users={this.state.users}
+                users={newUsers}
                 aiOn={this.state.computer}
                 aiFirst={this.state.computerFirst}
                 />
