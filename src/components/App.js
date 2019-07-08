@@ -106,12 +106,14 @@ class App extends Component {
 
     onBlurSize = (value) => {
         Number(value) < 3 ? value = 3 : (Number(value) > 10 ? value = 10 : true);
+        if (this.state.sizeWin > value) this.state.sizeWin = value;
         this.setState({size: Number(value)})
     }
 
     onChangeSizeWin = (value) => {
-        const regex = /^[0-9]+([0-9])*$/;
+        const regex = /^[0-9]*$/;
         if (!regex.test(value)) value = 3;
+
         this.setState({sizeWin: value})
     }
 
@@ -142,6 +144,7 @@ class App extends Component {
         if (!isIt) {
             this.setState({computer: false})
             this.setState({computerFirst: false})
+
         }
     }
 
