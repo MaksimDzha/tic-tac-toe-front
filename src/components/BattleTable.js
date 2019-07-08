@@ -31,7 +31,7 @@ class BattleTable extends Component{
     }
 
     aiTurn = (newTable) => {
-        aiHard(newTable, this.props.sizeWin, -1);
+        aiHard(newTable, this.props.sizeWin, -1, 0);
         const line = newCheck(newTable, this.props.sizeWin);
         if (line != null){
             this.props.gameOver(true, "Computer", newTable, line);

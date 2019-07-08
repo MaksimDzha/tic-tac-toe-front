@@ -61,7 +61,7 @@ const f = (k) => {
     return k * f(k - 1);
 }
 
-const score = (aiTable, player, m, sizeWin) => {
+const heuristicScore = (aiTable, player, m, sizeWin) => {
     var res = 0;
     const lineValues = [[0,-1],[-1,0],[-1,-1],[-1,1]];
     var investigated;
@@ -95,6 +95,12 @@ const score = (aiTable, player, m, sizeWin) => {
     return (player == "-1") ? res : -res;
 }
 
+const isGameOver = (aiTable, sizeWin) => {
+    const line = newCheck(aiTable, sizeWin);
+    const noTurn = isFullField(aiTable);
+    return ((line != null) || noTurn);
+}
+
 const isFullField = (aiTable) => {
     for (let i = 0; i < aiTable.length; i++) {
         for (let j = 0; j < aiTable[0].length; j++) {
@@ -103,6 +109,30 @@ const isFullField = (aiTable) => {
         }
     }
     return true;
+}
+
+const alphaBeta = (aiTable, move, player, alpha, beta, depth, maxDepth, sizeWin) => {
+    const finish = isGameOver(aiTable, sizeWin);
+    if (finish || depth == maxDepth) {
+        var score = heuristicScore(aiTable, player, move, sizeWin);
+        return score;
+    }
+    var score = -2147483681;
+    const moves = getMoves(aiTable, player);
+    moves.forEach( (m) => {
+        aiTable[m[0]][m[1]] = player;
+        var res = -alphaBeta(aiTable, move, -player, -beta, -score, depth + 1, maxDepth, sizeWin);
+        aiTable[m[0]][m[1]] = 0;
+        score = (res > score) ? res : score;
+        if (score > beta) {
+            return score;
+        }
+    })
+    return score;
+}
+
+const score = (aiTable, player, m, sizeWin, maxDepth) => {
+    return -alphaBeta(aiTable, m, player, -2147483681, 2147483647, 0, maxDepth, sizeWin);
 }
 
 const getMoves = (aiTable, player) => {
@@ -117,14 +147,14 @@ const getMoves = (aiTable, player) => {
     return moves;
 }
 
-const getBestMove = (aiTable, sizeWin, player) => {
+const getBestMove = (aiTable, sizeWin, player, maxDepth) => {
     const moves = getMoves(aiTable, player);
     var maxScore = -2147483681;
     var bestMove = null;
     var thisScore;
     moves.forEach( (m) => {
         aiTable[m[0]][m[1]] = player;
-        thisScore = score(aiTable, -player, m, sizeWin);
+        thisScore = score(aiTable, -player, m, sizeWin, maxDepth);
         aiTable[m[0]][m[1]] = 0;
         if (thisScore > maxScore) {
             bestMove = m;
@@ -134,7 +164,7 @@ const getBestMove = (aiTable, sizeWin, player) => {
     return bestMove;
 }
 
-const aiHard = (table, sizeWin, player) => {
+const aiHard = (table, sizeWin, player, maxDepth) => {
     var aiTable = createTable(table.length);
     table.forEach((row, x) => {
         row.forEach((item, y) => {
@@ -142,7 +172,7 @@ const aiHard = (table, sizeWin, player) => {
                 else (item == "X") ? aiTable[x][y] = 1 : aiTable[x][y] = -1
         })
     });
-    const m = getBestMove(aiTable, sizeWin, -player);
+    const m = getBestMove(aiTable, sizeWin, player, maxDepth);
     player == 1 ? table[m[0]][m[1]] = "X" : table[m[0]][m[1]] = "O";
 }
 
