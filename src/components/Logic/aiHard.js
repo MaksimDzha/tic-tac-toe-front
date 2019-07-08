@@ -169,7 +169,6 @@ const getBestMove = (aiTable, sizeWin, player, maxDepth) => {
 const aiHard = (table, sizeWin, computerPlay, maxDepth) => {
     const player = computerPlay == "X" ? 1 : -1;
     var aiTable = createTable(table.length);
-    console.log(aiTable);
     table.forEach((row, x) => {
         row.forEach((item, y) => {
             if (item == "") aiTable[x][y] = 0

@@ -25,17 +25,20 @@ class BattleTable extends Component{
         const tStep = this.state.step == "X" ? "O" : "X";
         const size = this.props.size;
         const newCount = this.state.count + 1;
-        if (newCount > size*size) {
+        if ((newCount == size*size)&&(this.props.aiOn)&&(this.state.computerPlay == "X"))
+            this.aiTurn(newTable);
+        if (newCount >= size*size) {
+            var resultTable = createTable(newTable.length);
             newTable.forEach((row, indexX) =>
                 row.forEach((item, indexY) => (
-                    newTable[indexX][indexY] = ["", item]
+                    resultTable[indexX][indexY] = ["", item]
                 ))
             )
-            this.props.gameOver(true, "", newTable, null, );
+            this.props.gameOver(true, "", resultTable, null);
         }
         this.setState({step: tStep});
         this.setState({count: this.state.count + 1});
-        if ((this.props.aiOn)&&(tStep == this.state.computerPlay)&&(newCount <= size*size))
+        if ((this.props.aiOn)&&(tStep == this.state.computerPlay)&&(newCount < size*size))
             this.aiTurn(newTable);
     }
 
