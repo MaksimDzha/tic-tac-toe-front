@@ -12,7 +12,8 @@ class BattleTable extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            count: 1,
+            count: 0,
+            computerPlay: "O",
             table: createTable(this.props.size),
             step: "X"
         }
@@ -24,14 +25,22 @@ class BattleTable extends Component{
         const tStep = this.state.step == "X" ? "O" : "X";
         const size = this.props.size;
         const newCount = this.state.count + 1;
-        if (newCount > size*size) this.props.gameOver(true, "", newTable, null);
+        if (newCount > size*size) {
+            newTable.forEach((row, indexX) =>
+                row.forEach((item, indexY) => (
+                    newTable[indexX][indexY] = ["", item]
+                ))
+            )
+            this.props.gameOver(true, "", newTable, null, );
+        }
         this.setState({step: tStep});
         this.setState({count: this.state.count + 1});
-        if ((tStep == "O")&(newCount <= size*size)&(this.props.aiOn)) this.aiTurn(newTable);
+        if ((this.props.aiOn)&&(tStep == this.state.computerPlay)&&(newCount <= size*size))
+            this.aiTurn(newTable);
     }
 
     aiTurn = (newTable) => {
-        aiHard(newTable, this.props.sizeWin, -1, 0);
+        aiHard(newTable, this.props.sizeWin, this.state.computerPlay, 0);
         const line = newCheck(newTable, this.props.sizeWin);
         if (line != null){
             newTable.forEach((row, indexX) =>
@@ -68,6 +77,15 @@ class BattleTable extends Component{
 
     render(){
         const users = this.props.users;
+        if (this.state.count == 0 && this.props.aiFirst) {
+            this.setState({computerPlay: "X"});
+            const newCount = this.state.count + 1;
+            var aiTable = createTable(this.props.size);
+            for (let i = 0; i < this.props.size; i++)
+                for (let j = 0; j < this.props.size; j++)
+                    aiTable[i][j] = "";
+            this.setState({count: newCount}, function(){this.aiTurn(aiTable)});
+        }
         return(
             <div style={style.column}>
                 <div style={style.playerName}>{

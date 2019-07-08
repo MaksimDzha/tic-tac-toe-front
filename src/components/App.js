@@ -14,6 +14,7 @@ class App extends Component {
         winner: "",
         resultTable: "",
         computer: false,
+        computerFirst: false,
         users: ["Player 1", "Player 2"]
         };
         this.playTheGame = this.playTheGame.bind(this),
@@ -24,31 +25,34 @@ class App extends Component {
         this.setState({computer: OnOff})
     )
 
+    aiFirst = (OnOff) => (
+        this.setState({computerFirst: OnOff}, function(){console.log(this.state.computerFirst)})
+
+    )
+
     changeInputName = () => {
         const checkbox = document.getElementById("checkboxAI");
-        var aiOn = false;
         checkbox.addEventListener('change', event => {
             if(event.target.checked){
                 this.aiOn(true)
             } else {
-                this.aiOn(false)
+                this.aiOn(false);
+            }
+        });
+    }
+
+    changeFirstTurn = () => {
+        const checkbox = document.getElementById("checkboxAIFirst");
+        checkbox.addEventListener('change', event => {
+            if(event.target.checked){
+                this.aiFirst(true)
+            } else {
+                this.aiFirst(false)
             }
         });
     }
 
     inputName = () => (
-        <div style={style.rowStart}>
-            <div>{"Введите имя игрока 1 (X): "}</div>
-            <input
-                style={style.inputNameStyle}
-                value={this.state.users[0]}
-                placeholder={"Введите имя первого игрока"}
-                onChange={(e) => this.onChangeName(0, e.target.value)}
-            />
-        </div>
-    )
-
-    inputNames = () => (
         <div>
             <div style={style.rowStart}>
                 <div>{"Введите имя игрока 1 (X): "}</div>
@@ -60,7 +64,25 @@ class App extends Component {
                 />
             </div>
             <div style={style.rowStart}>
-                <div>{"Введите имя игрока 2 (O): "}</div>
+                <div>{"Компьютер ходит первый"}</div>
+                <input type={'checkbox'} id="checkboxAIFirst" onClick={() => this.changeFirstTurn()}/>
+            </div>
+        </div>
+    )
+
+    inputNames = () => (
+        <div>
+            <div style={style.rowStart}>
+                <div>{"Введите имя игрока 1: "}</div>
+                <input
+                    style={style.inputNameStyle}
+                    value={this.state.users[0]}
+                    placeholder={"Введите имя первого игрока"}
+                    onChange={(e) => this.onChangeName(0, e.target.value)}
+                />
+            </div>
+            <div style={style.rowStart}>
+                <div>{"Введите имя игрока 2: "}</div>
                 <input
                     style={style.inputNameStyle}
                     value={this.state.users[1]}
@@ -110,13 +132,16 @@ class App extends Component {
         }
     }
 
-    playTheGame(isIt){
+    playTheGame = (isIt) => {
         const users = this.state.users;
         const checkUsers = [...users];
         users.forEach((value, id) => {this.checkName(id, value)});
         this.setState({isGameOver: false});
         this.setState({isGameRun: isIt});
-        if (!isIt) this.setState({computer: false})
+        if (!isIt) {
+            this.setState({computer: false})
+            this.setState({computerFirst: false})
+        }
     }
 
     gameOver(isIt, newWinner, table){
@@ -134,7 +159,9 @@ class App extends Component {
                 size={this.state.size}
                 sizeWin={this.state.sizeWin}
                 users={this.state.users}
-                aiOn={this.state.computer}/>
+                aiOn={this.state.computer}
+                aiFirst={this.state.computerFirst}
+                />
             )
         }
 

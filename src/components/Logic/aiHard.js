@@ -149,6 +149,8 @@ const getMoves = (aiTable, player) => {
 
 const getBestMove = (aiTable, sizeWin, player, maxDepth) => {
     const moves = getMoves(aiTable, player);
+    if (moves.length == 1)
+        return moves[0];
     var maxScore = -2147483681;
     var bestMove = null;
     var thisScore;
@@ -164,15 +166,17 @@ const getBestMove = (aiTable, sizeWin, player, maxDepth) => {
     return bestMove;
 }
 
-const aiHard = (table, sizeWin, player, maxDepth) => {
+const aiHard = (table, sizeWin, computerPlay, maxDepth) => {
+    const player = computerPlay == "X" ? 1 : -1;
     var aiTable = createTable(table.length);
+    console.log(aiTable);
     table.forEach((row, x) => {
         row.forEach((item, y) => {
             if (item == "") aiTable[x][y] = 0
                 else (item == "X") ? aiTable[x][y] = 1 : aiTable[x][y] = -1
         })
     });
-    const m = getBestMove(aiTable, sizeWin, player, maxDepth);
+    const m = getBestMove(aiTable, sizeWin, -1, maxDepth);
     player == 1 ? table[m[0]][m[1]] = "X" : table[m[0]][m[1]] = "O";
 }
 
