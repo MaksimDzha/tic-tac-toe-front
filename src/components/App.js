@@ -13,33 +13,16 @@ class App extends Component {
         isGameOver: false,
         winner: "",
         resultTable: "",
-        computer: false,
-        computerFirst: false,
-        users: ["Player 1", "Player 2"]
+        computerFirst: false
         };
         this.playTheGame = this.playTheGame.bind(this),
         this.gameOver = this.gameOver.bind(this)
     }
 
-    aiOn = (OnOff) => (
-        this.setState({computer: OnOff})
-    )
-
     aiFirst = (OnOff) => (
         this.setState({computerFirst: OnOff}, function(){console.log(this.state.computerFirst)})
 
     )
-
-    changeInputName = () => {
-        const checkbox = document.getElementById("checkboxAI");
-        checkbox.addEventListener('change', event => {
-            if(event.target.checked){
-                this.aiOn(true)
-            } else {
-                this.aiOn(false);
-            }
-        });
-    }
 
     changeFirstTurn = () => {
         const checkbox = document.getElementById("checkboxAIFirst");
@@ -52,57 +35,11 @@ class App extends Component {
         });
     }
 
-    inputName = () => (
-        <div>
-            <div style={style.rowStart}>
-                <div>{"Введите имя игрока 1: "}</div>
-                <input
-                    style={style.inputNameStyle}
-                    value={this.state.users[0]}
-                    placeholder={"Введите имя первого игрока"}
-                    onChange={(e) => (this.onChangeName(0, e.target.value))}
-                />
-            </div>
-            <div style={style.rowStart}>
-                <div>{"Компьютер ходит первый"}</div>
-                <input type={'checkbox'} id="checkboxAIFirst" onClick={() => this.changeFirstTurn()}/>
-            </div>
-        </div>
-    )
-
-    inputNames = () => (
-        <div>
-            <div style={style.rowStart}>
-                <div>{"Введите имя игрока 1: "}</div>
-                <input
-                    style={style.inputNameStyle}
-                    value={this.state.users[0]}
-                    placeholder={"Введите имя первого игрока"}
-                    onChange={(e) => this.onChangeName(0, e.target.value)}
-                />
-            </div>
-            <div style={style.rowStart}>
-                <div>{"Введите имя игрока 2: "}</div>
-                <input
-                    style={style.inputNameStyle}
-                    value={this.state.users[1]}
-                    placeholder={"Введите имя второго игрока"}
-                    onChange={(e) => this.onChangeName(1, e.target.value)}
-                />
-            </div>
-        </div>
-    )
-
-    onChangeName = (id, value) => {
-        this.setState(this.state.users.splice(id, 1, value));
-    }
-
-
     onChangeSize = (value) => {
-            const regex = /^[0-9]*$/;
-            if (!regex.test(value)) value = 3;
-            this.setState({size: value})
-        }
+        const regex = /^[0-9]*$/;
+        if (!regex.test(value)) value = 3;
+        this.setState({size: value})
+    }
 
     onBlurSize = (value) => {
         Number(value) < 3 ? value = 3 : (Number(value) > 10 ? value = 10 : true);
@@ -123,28 +60,11 @@ class App extends Component {
         this.setState({sizeWin: Number(value)})
     }
 
-    checkName = (id, value) => {
-        if (value == "") {
-            id == 0 ? value = "Player 1" : value = "Player 2";
-            this.setState(this.state.users.splice(id, 1, value));
-        }
-        const regex = /^[а-яА-яёЁa-zA-Z0-9]+([_\s\-]?[а-яА-яёЁa-zA-Z0-9])*$/;
-        if (!regex.test(value)) {
-            id == 0 ? value = "Player 1" : value = "Player 2";
-            this.setState(this.state.users.splice(id, 1, value));
-        }
-    }
-
     playTheGame = (isIt) => {
-        const users = this.state.users;
-        const checkUsers = [...users];
-        users.forEach((value, id) => {this.checkName(id, value)});
         this.setState({isGameOver: false});
         this.setState({isGameRun: isIt});
         if (!isIt) {
-            this.setState({computer: false})
             this.setState({computerFirst: false})
-
         }
     }
 
@@ -157,15 +77,11 @@ class App extends Component {
 
     render() {
         if (this.state.isGameRun) {
-            const newUsers = [...this.state.users];
-            if (this.state.computer && this.state.computerFirst) newUsers[1] = newUsers[0];
             return (
                 <Game playTheGame={this.playTheGame}
                 gameOver={this.gameOver}
                 size={this.state.size}
                 sizeWin={this.state.sizeWin}
-                users={newUsers}
-                aiOn={this.state.computer}
                 aiFirst={this.state.computerFirst}
                 />
             )
@@ -187,10 +103,9 @@ class App extends Component {
         return (
             <div style={style.start}>
                 <div style={style.gameName}>Добро пожаловать в игру крестики-нолики</div>
-                <div>{this.state.computer ? this.inputName() : this.inputNames()}</div>
                 <div style={style.rowStart}>
-                    <div>{"Хотите с компьютером?"}</div>
-                    <input type={'checkbox'} id="checkboxAI" onClick={() => this.changeInputName()}/>
+                    <div>{"Компьютер ходит первый"}</div>
+                    <input type={'checkbox'} id="checkboxAIFirst" onClick={() => this.changeFirstTurn()}/>
                 </div>
                 <div style={style.rowStart}>
                     <div style={style.customize}>{"Размер поля (3 - 10): "}</div>

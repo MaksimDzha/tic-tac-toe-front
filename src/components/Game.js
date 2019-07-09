@@ -2,15 +2,13 @@ import React from 'react'
 import style from './style.css'
 import BattleTable from './BattleTable'
 
-const Game = ({playTheGame, gameOver, size, sizeWin, users, aiOn, aiFirst}) => (
+const Game = ({playTheGame, gameOver, size, sizeWin, aiFirst}) => (
     <div style={style.game}>
         <div style={style.gameBegin}>Игра началась!</div>
         <div><BattleTable
             gameOver={gameOver}
             size={size}
             sizeWin={sizeWin}
-            users={users}
-            aiOn={aiOn}
             aiFirst={aiFirst}
             />
         </div>

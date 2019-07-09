@@ -23,7 +23,7 @@ class BattleTable extends Component{
         const tStep = this.state.step == "X" ? "O" : "X";
         const size = this.props.size;
         const newCount = this.state.count + 1;
-        if ((newCount == size*size)&&(this.props.aiOn)&&(this.state.computerPlay == "X"))
+        if ((newCount == size*size)&&(this.state.computerPlay == "X"))
             this.aiTurn(newTable);
         if (newCount >= size*size) {
             var resultTable = createTable(newTable.length);
@@ -36,7 +36,7 @@ class BattleTable extends Component{
         }
         this.setState({step: tStep});
         this.setState({count: this.state.count + 1});
-        if ((this.props.aiOn)&&(tStep == this.state.computerPlay)&&(newCount < size*size))
+        if ((tStep == this.state.computerPlay)&&(newCount < size*size))
             this.aiTurn(newTable);
     }
 
@@ -50,7 +50,7 @@ class BattleTable extends Component{
                 ))
             )
             line.forEach((item) => {newTable[item[0]][item[1]][0] = "win"})
-            this.props.gameOver(true, "Computer", newTable);
+            this.props.gameOver(true, "Вы проиграли", newTable);
         }
         this.setState({table: newTable}, function(){this.nextStep(newTable)});
     }
@@ -63,21 +63,19 @@ class BattleTable extends Component{
             newTable[rowID] = newRow;
             const line = newCheck(newTable, this.props.sizeWin);
             if (line != null){
-                const winner = this.state.step == "X" ? this.props.users[0] : this.props.users[1];
                 newTable.forEach((row, indexX) =>
                     row.forEach((item, indexY) => (
                         newTable[indexX][indexY] = ["", item]
                     ))
                 )
                 line.forEach((item) => {newTable[item[0]][item[1]][0] = "win"})
-                this.props.gameOver(true, winner, newTable);
+                this.props.gameOver(true, "Вы победили. Поздравляем!", newTable);
             }
             this.setState({table: newTable}, function(){this.nextStep(newTable)});
         }
     }
 
     render(){
-        const users = this.props.users;
         if (this.state.count == 0 && this.props.aiFirst) {
             this.setState({computerPlay: "X"});
             const newCount = this.state.count + 1;
@@ -90,7 +88,7 @@ class BattleTable extends Component{
         return(
             <div style={style.column}>
                 <div style={style.playerName}>{
-                    this.state.step === "X" ? ('Ход ' + users[0]) : ('Ход ' + users[1])
+                    this.state.step === "X" ? 'Ваш ход - X' : 'Ваш ход - O'
                 }
                 </div>
                 <div>{Cells(this.state.table, this.playerTurn)}</div>

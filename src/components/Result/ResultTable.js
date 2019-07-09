@@ -4,7 +4,7 @@ import style from './style.css'
 const ResultTable = (table, winner, line) => (
     <div>
         <div style={style.column}>
-            <div style={style.winner}>{(winner == "") ? "Ничья!" : ("Победитель: " + winner)}</div>
+            <div style={style.winner}>{(winner == "") ? "Ничья!" : (winner)}</div>
             {table.map((row, indexX) => {
                 return (
                     <div style={style.row} key={indexX}>{
